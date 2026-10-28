@@ -1,0 +1,44 @@
+# pulse-web/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "pulse.fullname" . }}-html
+  labels:
+    {{- include "pulse.labels" . | nindent 4 }}
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>{{ .Chart.Name }} | {{ .Values.environment | upper }}</title>
+      <style>
+        body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 3rem; }
+        .banner { border-left: 6px solid {{ .Values.themeColor }}; background: #1e293b; padding: 1.5rem 2rem; border-radius: 8px; max-width: 650px; margin: 0 auto; }
+        .badge { background: {{ .Values.themeColor }}; color: #0f172a; padding: 4px 10px; border-radius: 999px; font-weight: bold; font-size: 0.8rem; }
+        .meta { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #334155; font-family: monospace; color: #94a3b8; font-size: 0.9rem; }
+      </style>
+    </head>
+    <body>
+      <div class="banner">
+        <span class="badge">ENV: {{ .Values.environment | upper }}</span>
+        <h1>{{ .Values.bannerText }}</h1>
+
+        <h3>Active Helm Capabilities:</h3>
+        <ul>
+        {{- range .Values.features }}
+          <li>{{ . }}</li>
+        {{- end }}
+        </ul>
+
+        {{- if .Values.showReleaseMetadata }}
+        <div class="meta">
+          <p><strong>Release Name:</strong> {{ .Release.Name }}</p>
+          <p><strong>Namespace:</strong> {{ .Release.Namespace }}</p>
+          <p><strong>Revision:</strong> v{{ .Release.Revision }}</p>
+          <p><strong>Chart Version:</strong> {{ .Chart.Name }}-{{ .Chart.Version }} (NGINX {{ .Chart.AppVersion }})</p>
+        </div>
+        {{- end }}
+      </div>
+    </body>
+    </html>

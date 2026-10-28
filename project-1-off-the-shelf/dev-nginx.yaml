@@ -1,0 +1,36 @@
+# dev-nginx.yaml
+replicaCount: 2
+
+service:
+  type: ClusterIP
+  ports:
+    http: 80
+
+# Tell bitnami/nginx to mount this ConfigMap as the HTML web root
+staticSiteConfigmap: "custom-nginx-html"
+
+# Bundle the ConfigMap directly inside the Helm release
+extraDeploy:
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: custom-nginx-html
+      namespace: web-lab
+    data:
+      index.html: |
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Helm NGINX Lab</title>
+          <style>
+            body { font-family: sans-serif; background: #0f172a; color: #38bdf8; text-align: center; padding-top: 10%; }
+            .card { display: inline-block; background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <h1>Hello from Bitnami NGINX!</h1>
+            <p>This custom HTML page is mounted via a <strong>Kubernetes ConfigMap</strong> managed by Helm.</p>
+          </div>
+        </body>
+        </html>

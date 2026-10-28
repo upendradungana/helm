@@ -1,0 +1,7 @@
+# pulse-web/Chart.yaml
+apiVersion: v2
+name: pulse-web
+description: A custom NGINX web chart with a dynamic ConfigMap HTML dashboard
+type: application
+version: 0.1.0        # Bump when chart templates change
+appVersion: "1.27.0"  # Underlying NGINX version

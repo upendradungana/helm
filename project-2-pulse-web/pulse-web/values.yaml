@@ -1,0 +1,21 @@
+# pulse-web/values.yaml
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.27-alpine"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+# Custom HTML ConfigMap Knobs
+environment: "development"
+bannerText: "Welcome to NGINX on Kubernetes!"
+themeColor: "#0ea5e9"
+showReleaseMetadata: true
+features:
+  - "Templated NGINX Deployment"
+  - "Dynamic HTML ConfigMap Injection"
+  - "Zero-Downtime SHA-256 ConfigMap Rollouts"
